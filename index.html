@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AnaQoldau — Аналарға арналған әлеуметтік платформа</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #7C3AED;
+      --primary-light: #A78BFA;
+      --secondary: #EC407A;
+      --accent: #F59E0B;
+      --bg: #0F172A;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+      --border: rgba(255, 255, 255, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background: #0B0F19;
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(236, 64, 122, 0.15) 0%, transparent 40%);
+    }
+
+    /* Header */
+    header {
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 32px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 24px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #A78BFA, #EC407A);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 20px;
+      box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 12px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(124, 58, 237, 0.5);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #FFF, #94A3B8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 18px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Nav Tabs */
+    .category-toggle {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .tab-btn {
+      padding: 16px 32px;
+      border-radius: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(236, 64, 122, 0.2));
+      border-color: var(--primary-light);
+      color: white;
+      box-shadow: 0 8px 30px rgba(124, 58, 237, 0.2);
+    }
+
+    /* Cards Grid */
+    .section-page {
+      display: none;
+    }
+
+    .section-page.active {
+      display: block;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      backdrop-filter: blur(12px);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary-light);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: rgba(124, 58, 237, 0.15);
+      color: var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    /* Calculator Widget */
+    .calc-box {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(236, 64, 122, 0.1));
+      border: 1px solid var(--primary-light);
+      border-radius: 24px;
+      padding: 32px;
+      margin-bottom: 40px;
+    }
+
+    .calc-box h3 {
+      font-size: 22px;
+      margin-bottom: 16px;
+      color: var(--primary-light);
+    }
+
+    .input-group {
+      display: flex;
+      gap: 16px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    input, select {
+      flex: 1;
+      min-width: 200px;
+      padding: 14px 18px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: white;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .calc-result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    /* AI Chat Widget */
+    .chat-widget {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 360px;
+      height: 480px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      display: none;
+      flex-direction: column;
+      z-index: 1000;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .msg {
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: 14px;
+      max-width: 80%;
+      line-height: 1.4;
+    }
+
+    .msg.user {
+      background: var(--primary);
+      color: white;
+      align-self: flex-end;
+    }
+
+    .msg.ai {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      align-self: flex-start;
+    }
+
+    .chat-input-box {
+      padding: 12px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+    }
+
+    .chat-toggle-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(124, 58, 237, 0.5);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <div class="logo-icon">🌸</div>
+      AnaQoldau
+    </div>
+    <button class="btn btn-primary" onclick="alert('Жүйеге кіру функциясы іске қосылды!')">Кіру / Тіркелу</button>
+  </header>
+
+  <!-- Main Container -->
+  <div class="container">
+    <div class="hero">
+      <h1>Аналар мен балаларға арналған қолдау</h1>
+      <p>Әлеуметтік көмек, жәрдемақылар, тегін үйірмелер мен жұмыс мүмкіндіктерін бір жерден табыңыз.</p>
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="category-toggle">
+      <button class="tab-btn active" onclick="switchTab('mother')">
+        👩‍👧 Өзім үшін (Анаға)
+      </button>
+      <button class="tab-btn" onclick="switchTab('child')">
+        👶 Балам үшін
+      </button>
+    </div>
+
+    <!-- FOR MOTHER SECTION -->
+    <div id="mother-section" class="section-page active">
+      <!-- Calculator -->
+      <div class="calc-box">
+        <h3>🧮 Жәрдемақы мөлшерін есептеу калькуляторы</h3>
+        <p>Отбасындағы бала санын енгізіп, болжамды жәрдемақы мөлшерін біліңіз:</p>
+        <div class="input-group">
+          <input type="number" id="childCount" placeholder="Бала саны" min="1" max="10">
+          <button class="btn btn-primary" onclick="calculateBenefit()">Есептеу</button>
+        </div>
+        <div class="calc-result" id="calcResult"></div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div class="card-icon">💰</div>
+          <h3>Атаулы Әлеуметтік Көмек (АӘК)</h3>
+          <p>Төмен табысты отбасыларға арналған мемлекеттік қолдау бағдарламасы. eGov.kz арқылы өтінім беру жолдары.</p>
+          <button class="btn btn-primary" onclick="window.open('https://egov.kz', '_blank')">Толығырақ eGov</button>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">💼</div>
+          <h3>Икемді Жұмыс және Фриланс</h3>
+          <p>Үйде отырған аналарға арналған қашықтан жұмыс істеу мүмкіндіктері және тегін кәсіптік курстар.</p>
+          <button class="btn btn-primary" onclick="alert('Бос орындар тізімі жаңартылуда!')">Вакансиялар</button>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🤝</div>
+          <h3>Волонтерлік Көмек</h3>
+          <p>Азық-түлік, киім-кешек, тегін заңгерлік немесе психологиялық консультацияға өтініш қалдыру.</p>
+          <button class="btn btn-primary" onclick="alert('Өтінім формасы ашылды!')">Көмек сұрау</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOR CHILD SECTION -->
+    <div id="child-section" class="section-page">
+      <div class="grid">
+        <div class="card">
+          <div class="card-icon">🎨</div>
+          <h3>DamuBala Дамыту Үйірмелері</h3>
+          <p>Шахмат, сурет салу, робототехника, тіл курстары және басқа да шығармашылық үйірмелер.</p>
+          <button class="btn btn-primary" onclick="window.open('https://damubala.kz', '_blank')">DamuBala-ға өту</button>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">⚽</div>
+          <h3>ArtSport Спорт Секциялары</h3>
+          <p>Балаларға арналған тегін спорттық секциялар (футбол, гимнастика, дзюдо, плавание).</p>
+          <button class="btn btn-primary" onclick="window.open('https://artsport.kz', '_blank')">ArtSport-қа өту</button>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🏥</div>
+          <h3>Оңалту Орталықтары</h3>
+          <p>Ерекше қажеттіліктері бар балаларға арналған тегін реабилитациялық және сауықтыру курстары.</p>
+          <button class="btn btn-primary" onclick="alert('Орталықтар тізімі жіберілді!')">Орталықтарды іздеу</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat Toggle Button -->
+  <button class="chat-toggle-btn" onclick="toggleChat()">💬</button>
+
+  <!-- AI Chat Widget -->
+  <div class="chat-widget" id="chatWidget">
+    <div class="chat-header">
+      <span>🤖 AnaQoldau AI Көмекші</span>
+      <span style="cursor:pointer;" onclick="toggleChat()">✕</span>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg ai">Сәлеметсіз бе! Мен AnaQoldau AI көмекшісімін. Жәрдемақылар немесе үйірмелер бойынша сұрағыңыз бар ма?</div>
+    </div>
+    <div class="chat-input-box">
+      <input type="text" id="chatInput" placeholder="Сұрақ жазыңыз...">
+      <button class="btn btn-primary" onclick="sendMsg()">Жіберу</button>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.section-page').forEach(page => page.classList.remove('active'));
+
+      if (tab === 'mother') {
+        event.currentTarget.classList.add('active');
+        document.getElementById('mother-section').classList.add('active');
+      } else {
+        event.currentTarget.classList.add('active');
+        document.getElementById('child-section').classList.add('active');
+      }
+    }
+
+    function calculateBenefit() {
+      const count = parseInt(document.getElementById('childCount').value);
+      const resDiv = document.getElementById('calcResult');
+
+      if (!count || count < 1) {
+        resDiv.innerText = "Өтініш, бала санын дұрыс енгізіңіз.";
+        return;
+      }
+
+      let amount = 0;
+      if (count === 1) amount = 23000;
+      else if (count === 2) amount = 25000;
+      else if (count === 3) amount = 28000;
+      else if (count >= 4) amount = 55000 + (count - 4) * 13000;
+
+      resDiv.innerText = `Болжамды айлық жәрдемақы мөлшері: ~${amount.toLocaleString()} ₸`;
+    }
+
+    function toggleChat() {
+      const chat = document.getElementById('chatWidget');
+      chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function sendMsg() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const msgBox = document.getElementById('chatMessages');
+
+      const userMsg = document.createElement('div');
+      userMsg.className = 'msg user';
+      userMsg.innerText = text;
+      msgBox.appendChild(userMsg);
+
+      input.value = '';
+
+      setTimeout(() => {
+        const aiMsg = document.createElement('div');
+        aiMsg.className = 'msg ai';
+
+        const lower = text.toLowerCase();
+        if (lower.includes('жәрдемақы') || lower.includes('ақша')) {
+          aiMsg.innerText = "Көпбалалы аналарға арналған жәрдемақы және АӘК туралы eGov.kz порталынан немесе біздің калькулятор арқылы есептей аласыз.";
+        } else if (lower.includes('үйірме') || lower.includes('бала')) {
+          aiMsg.innerText = "Тегін үйірмелерге тіркелу үшін DamuBala немесе ArtSport сайттарын қолдана аласыз.";
+        } else {
+          aiMsg.innerText = "Сұрағыңыз қабылданды. Өз сұрағыңыз бойынша толығырақ ақпаратты тиісті бөлімнен таба аласыз.";
+        }
+
+        msgBox.appendChild(aiMsg);
+        msgBox.scrollTop = msgBox.scrollHeight;
+      }, 500);
+    }
+  </script>
+</body>
+</html>
